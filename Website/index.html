@@ -1,0 +1,36 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>AccessMap Dashboard</title>
+  <meta name="author" content="AccessMap Team D2">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>   
+         <h1>AccessMap Dashboard</h1>
+    </header>
+
+    <main>
+    <div id='map' style='width: 400px; height: 300px;'></div>
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiemtlaSIsImEiOiJjajlic3hpeGYxajlzMnFsc3lpcmM3ZnVyIn0.stjuXAylUunlikhHKQZM-Q';
+    var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v10',
+    center: [-122.335167, 47.608013], // starting position [lng, lat]
+    zoom: 9
+    });
+    </script>
+  <!-- <script src="js/scripts.js"></script> -->
+</main>
+</body>
+</html>
