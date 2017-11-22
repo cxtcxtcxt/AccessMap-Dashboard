@@ -26,7 +26,7 @@ def haversine_distance(origin, destination):
     return d
 
 
-def build_graph(gdf, precision=1, simplify=.05):
+def build_graph(gdf, precision=1, simplify=.05, graph=None, id_col="id"):
     '''
     Builds and a returns a graph based on a GeoDataFrame where an
     edge is stored in each row.
@@ -42,9 +42,11 @@ def build_graph(gdf, precision=1, simplify=.05):
     :return: A networkx Graph built from the edges.
     '''
     gdf.geometry = gdf.geometry.simplify(simplify)
-    g = nx.Graph()
+    g = graph
+    if graph is None:
+        g = nx.Graph()
 
-    def add_edges(row, G):
+    def add_edges(row, G, id_col):
         geom = row.geometry
         coords = list(geom.coords)
         start = tuple(np.round(coords[0], precision))
@@ -53,11 +55,11 @@ def build_graph(gdf, precision=1, simplify=.05):
         edge_attr = {
             'forward': 1,
             'geometry': geom,
-            'distance': haversine_distance(coords[0], coords[-1]),
-            'id': row.street_id
+            'distance': haversine_distance(coords[0], coords[-1])
+            #'id': row.loc[id_col]
         }
         G.add_edge(start, end, **edge_attr)
 
-    gdf.apply(add_edges, axis=1, args=[g])
+    gdf.apply(add_edges, axis=1, args=[g, id_col])
 
     return g
