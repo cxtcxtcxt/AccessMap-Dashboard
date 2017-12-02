@@ -29,10 +29,10 @@ $.getJSON("sidewalks.geojson", function (data) {
 $.getJSON("supermarketData.json", function(data){
     var supermarkets = data;
     console.log(supermarkets);
-    // $.each(data, function(index, value){
-    //     console.log(value);
-    // })
+ 
 })
+
+
 
 
 // add interactivity to the supermarket
