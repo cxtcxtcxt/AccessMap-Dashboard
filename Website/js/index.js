@@ -6,35 +6,123 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiemtlaSIsImEiOiJjajlic3hpeGYxajlzMnFsc3lpcmM3ZnVyIn0.stjuXAylUunlikhHKQZM-Q';
 const map = new mapboxgl.Map({
 container: 'map',
-style: 'mapbox://styles/mapbox/streets-v10',
+style: 'mapbox://styles/mapbox/light-v9',
 center: [-122.335167, 47.608013], // starting position [lng, lat]
 zoom: 14
 });
 
 // var bbox = turf.bbox(features);
+var crossingsWith;
+var crossingsWithout;
+var withCurbBramp=[];
+var withoutCurbBramp=[];
 
-// get the sidewalks data
-$.getJSON("sidewalks.geojson", function (data) {
-    // $.each(data, function (index, value) {
-    //    console.log(value);
-    // });
-    var streetInfo = data;
-    console.log(streetInfo);
+
+$.getJSON("crossings.geojson", function (data) {
+    crossingsWith = data;
+    crossingsWithout = data;
+    let features = data.features;
+    console.log(data);
+    features.forEach(function (feature) {
+        // console.log(feature);
+        if(feature.properties.curbramps > 0){
+            withCurbBramp.push(feature);
+        }else{
+            withoutCurbBramp.push(feature)
+        }
+    });
+
+    crossingsWith =  {
+        "type": "FeatureCollection",
+        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+        "features": withCurbBramp
+    }
+    
+    crossingsWithout =  {
+        "type": "FeatureCollection",
+        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+        "features": withoutCurbBramp
+    }
+    
+    console.log(crossingsWith);
+    console.log(crossingsWithout);
+    label(crossingsWith, crossingsWithout);
+    county();
 });
+console.log(crossingsWith);
+console.log(crossingsWithout);
 
 
-// get the supermarkets information (from Yelp API)
-// got some technical issues and not being able to getting access to the api on the website
-// got the data thru Postman software
-$.getJSON("supermarketData.json", function(data){
-    var supermarkets = data;
-    console.log(supermarkets);
- 
-})
+function label(crossingsWith, crossingsWithout){
+    map.on('load', function() {
+        console.log("mapmap");
+        
+        map.addLayer({
+          id: 'crossingWith',
+          type: "circle",
+          source: {
+            type: 'geojson',
+            data: crossingsWith
+          },
+
+          paint: { 'circle-radius': {
+            'base': 1.75,
+            'stops': [[12, 2], [22, 180]]
+            },
+            'circle-color': "#3CB371"
+        }
+        });
+
+        map.addLayer({
+            id: 'crossingsWithout',
+            type: "circle",
+            source: {
+              type: 'geojson',
+              data: crossingsWithout
+            },
+
+            paint: { 'circle-radius': {
+              'base': 1.75,
+              'stops': [[12, 2], [22, 180]]
+              },
+              'circle-color': "#B22222"
+          }
+          });
+  
+    });
+}
 
 
+function county(){
+    map.addSource('counties', {
+        "type": "vector",
+        "url": "mapbox://mapbox.82pkq93d"
+    });
 
+    map.addLayer({
+        "id": "counties",
+        "type": "fill",
+        "source": "counties",
+        "source-layer": "original",
+        "paint": {
+            "fill-outline-color": "rgba(0,0,0,0.1)",
+            "fill-color": "rgba(0,0,0,0.1)"
+        }
+    }, 'place-city-sm'); // Place polygon under these labels.
 
-// add interactivity to the supermarket
+    map.addLayer({
+        "id": "counties-highlighted",
+        "type": "fill",
+        "source": "counties",
+        "source-layer": "original",
+        "paint": {
+            "fill-outline-color": "#484896",
+            "fill-color": "#6e599f",
+            "fill-opacity": 0.75
+        },
+        "filter": ["in", "COUNTY", ""]
+    }, 'place-city-sm');
+
+}
 
 
