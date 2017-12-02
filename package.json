@@ -1,0 +1,25 @@
+{
+  "name": "accessmap-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZKeiLin/AccessMap-Dashboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZKeiLin/AccessMap-Dashboard/issues"
+  },
+  "homepage": "https://github.com/ZKeiLin/AccessMap-Dashboard#readme",
+  "dependencies": {
+    "@mapbox/geojson-area": "^0.2.2",
+    "install": "^0.10.2",
+    "mapbox-gl": "^0.42.2"
+  },
+  "devDependencies": {}
+}

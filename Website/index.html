@@ -9,10 +9,17 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
+  <!-- import Mapbox GL JS and Turf.js -->
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.42.1/mapbox-gl.js' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v0.42.1/mapbox-gl.css'></script>
+ <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>  
+
+ <script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.css' rel='stylesheet' />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
+  
   
 </head>
 
@@ -34,15 +41,11 @@
         </nav>
     
     <div id='map'></div>
-    <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoiemtlaSIsImEiOiJjajlic3hpeGYxajlzMnFsc3lpcmM3ZnVyIn0.stjuXAylUunlikhHKQZM-Q';
-    var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v10',
-    center: [-122.335167, 47.608013], // starting position [lng, lat]
-    zoom: 9
-    });
-    </script>
+
+    <!-- import jquery -->
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>      
+    <script src="js/index.js"></script>
+    
   <!-- <script src="js/scripts.js"></script> -->
 </main>
 </body>
